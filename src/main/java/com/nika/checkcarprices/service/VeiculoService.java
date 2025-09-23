@@ -1,8 +1,13 @@
 package com.nika.checkcarprices.service;
 
+import com.nika.checkcarprices.model.Dados;
+
+import java.util.Comparator;
+
 public class VeiculoService {
     private final String BASE_URI = "https://parallelum.com.br/fipe/api/v1/";
     private ConsumoAPI consumoAPI = new ConsumoAPI();
+    private ConverteDados converteDados = new ConverteDados();
 
     public void listarVeiculos(String veiculo){
         var json = "";
@@ -15,6 +20,9 @@ public class VeiculoService {
             json = consumoAPI.obterDados(BASE_URI + "caminhoes/marcas");
         }
 
-        System.out.println(json);
+        var marcas = converteDados.obterLista(json, Dados.class);
+        marcas.stream()
+                .sorted(Comparator.comparing(Dados::codigo))
+                .forEach(System.out::println);
     }
 }

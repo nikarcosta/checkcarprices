@@ -1,6 +1,5 @@
 package com.nika.checkcarprices.principal;
 
-import com.nika.checkcarprices.service.ConsumoAPI;
 import com.nika.checkcarprices.service.VeiculoService;
 
 import java.util.Scanner;
