@@ -1,6 +1,7 @@
 package com.nika.checkcarprices.service;
 
 import com.nika.checkcarprices.model.Dados;
+import com.nika.checkcarprices.model.Modelos;
 
 import java.util.Comparator;
 
@@ -13,7 +14,6 @@ public class VeiculoService {
         var json = "";
         if(veiculo.toLowerCase().contains("car")){
             json = consumoAPI.obterDados(BASE_URI + "carros/marcas");
-            System.out.println();
         } else if(veiculo.toLowerCase().contains("mot")){
             json = consumoAPI.obterDados(BASE_URI + "motos/marcas");
         } else {
@@ -22,6 +22,23 @@ public class VeiculoService {
 
         var marcas = converteDados.obterLista(json, Dados.class);
         marcas.stream()
+                .sorted(Comparator.comparing(Dados::codigo))
+                .forEach(System.out::println);
+    }
+
+    public void listarModelos(int veiculo, int codMarca){
+        var json = "";
+
+        switch (veiculo){
+            case 1 -> json = consumoAPI.obterDados(BASE_URI + "carros/marcas/" + codMarca + "/modelos");
+            case 2 -> json = consumoAPI.obterDados(BASE_URI + "motos/marcas/" + codMarca + "/modelos");
+            case 3 -> json = consumoAPI.obterDados(BASE_URI + "caminhoes/marcas/" + codMarca + "/modelos");
+            default -> System.out.println("Opção inválida!");
+        }
+
+        System.out.println("Modelos dessa marca:");
+        var modeloLista = converteDados.obterDados(json, Modelos.class);
+        modeloLista.modelos().stream()
                 .sorted(Comparator.comparing(Dados::codigo))
                 .forEach(System.out::println);
     }
