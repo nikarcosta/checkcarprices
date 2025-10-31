@@ -15,6 +15,7 @@ public class Principal {
             System.out.println("Menu");
             System.out.println("1 - Buscar veículos");
             System.out.println("2 - Buscar modelos");
+            System.out.println("3 - Buscar informações de um veículo");
             System.out.println("0 - Sair");
             System.out.println("Escolha uma opção");
 
@@ -24,6 +25,7 @@ public class Principal {
             switch (opcao){
                 case 1 -> buscarVeiculos();
                 case 2 -> buscarModelos();
+                case 3 -> buscarInformacoesVeiculo();
                 case 0 -> System.out.println("Encerrando...");
                 default -> System.out.println("Opção inválida!");
             }
@@ -57,5 +59,28 @@ public class Principal {
         input.nextLine();
 
         veiculoService.listarModelos(veiculo, codMarca);
+    }
+
+    private void buscarInformacoesVeiculo(){
+        System.out.println("Qual é o tipo de veículo?");
+        System.out.println("1 - Carro");
+        System.out.println("2 - Moto");
+        System.out.println("3 - Caminhão");
+        System.out.println("Digite uma das opções acima:");
+
+        int veiculo = input.nextInt();
+        input.nextLine();
+
+        System.out.println("Agora digite o código da marca que você deseja consultar:");
+
+        int codMarca = input.nextInt();
+        input.nextLine();
+
+        System.out.println("Agora digite um trecho do nome do veículo a ser buscado:");
+
+        String nomeVeiculo = input.nextLine();
+
+
+        veiculoService.listarVeiculosPorNome(veiculo, codMarca, nomeVeiculo);
     }
 }
